@@ -1,0 +1,159 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:sonarjs/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "buscoequip/tsconfig.json",
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "arrowFunctions": true
+    }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "@typescript-eslint/tslint",
+    "simple-import-sort",
+    "sonarjs"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"],
+        "paths": ["./src"]
+      }
+    }
+  },
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "Object": {
+            "message": "Avoid using the `Object` type. Did you mean `object`?"
+          },
+          "Function": {
+            "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+          },
+          "Boolean": {
+            "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+          },
+          "Number": {
+            "message": "Avoid using the `Number` type. Did you mean `number`?"
+          },
+          "String": {
+            "message": "Avoid using the `String` type. Did you mean `string`?"
+          },
+          "Symbol": {
+            "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+          }
+        }
+      }
+    ],
+    "@typescript-eslint/no-inferrable-types": 0,
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
+    "@typescript-eslint/dot-notation": "error",
+    "@typescript-eslint/no-empty-function": "warn",
+    "@typescript-eslint/no-empty-interface": "error",
+    "@typescript-eslint/no-require-imports": "warn",
+    "@typescript-eslint/no-redeclare": "error",
+    "@typescript-eslint/no-unused-expressions": "error",
+    "@typescript-eslint/restrict-plus-operands": "error",
+    "@typescript-eslint/semi": ["error", "always"],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        }
+      }
+    ],
+    "@typescript-eslint/tslint/config": [
+      "error",
+      {
+        "rules": {
+          "import-spacing": true,
+          "prefer-conditional-expression": true,
+          "whitespace": true
+        }
+      }
+    ],
+    "@typescript-eslint/unified-signatures": "error",
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": ["error", "never"],
+    "curly": "error",
+    "eol-last": ["error", "always"],
+    "eqeqeq": ["error", "smart"],
+    "no-caller": "error",
+    "no-cond-assign": "error",
+    "no-console": [
+      "error",
+      {
+        "allow": ["error", "debug", "info"]
+      }
+    ],
+    "no-duplicate-case": "error",
+    "no-duplicate-imports": "error",
+    "no-empty": "error",
+    "no-empty-function": "warn",
+    "no-fallthrough": "error",
+    "no-invalid-this": "error",
+    "no-multiple-empty-lines": "error",
+    "no-redeclare": "off",
+    "no-sparse-arrays": "error",
+    "no-trailing-spaces": "error",
+    "no-useless-constructor": "warn",
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-object-spread": "error",
+    "linebreak-style": ["error", "unix"],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "space-in-parens": ["error", "never"],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": ["/"]
+      }
+    ],
+    "valid-typeof": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_.*",
+        "argsIgnorePattern": "^_.*"
+      }
+    ]
+  }
+}

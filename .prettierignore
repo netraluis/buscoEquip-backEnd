@@ -1,0 +1,6 @@
+# Ignore folders:
+coverage
+dist/*
+node_modules
+src/db/migrations/*
+.yalc
