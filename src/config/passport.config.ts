@@ -3,6 +3,7 @@ import local_strategy from 'passport-local';
 import bcrypt from 'bcryptjs';
 import { User, UserDoc } from '../models/user.models';
 import { NativeError } from "mongoose";
+import { PassportAuthError } from '../utils/errors/passport-auth-errors';
 
 
 const LocalStrategy = local_strategy.Strategy
@@ -25,19 +26,10 @@ export default (app: any) => {
       (req, email, password, next) => {
         User.findOne({ email: email.toLocaleLowerCase() })
           .then((user) => {
-            if (!user) {
-              return next(null, false, {
-                message: "Usuario o contraseña incorrectos",
-              });
+            if (!user || !bcrypt.compareSync(password, user.password)) {
+              return next(new PassportAuthError('Incorrect user or password'));
             }
-
-            if (bcrypt.compareSync(password, user.password)) {
-              return next(null, user);
-            } else {
-              return next(null, false, {
-                message: "Usuario o contraseña incorrectos",
-              });
-            }
+            return next(null, user);
           })
           .catch((error) => next(error));
       }
