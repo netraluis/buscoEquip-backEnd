@@ -4,7 +4,8 @@ import { errorHandler, NotFoundError } from './utils/index';
 import  morgan  from 'morgan';
 import  helmet  from 'helmet'
 import  rateLimit from 'express-rate-limit';
-import user from './routes/user.routes';
+import auth from './routes/auth.routes';
+import match from './routes/match.routes';
 import passportConfig from './config/passport.config';
 import sessionConfig from './config/session.config';
 
@@ -47,7 +48,8 @@ passportConfig(app)
 // app.use(signinRouter);
 // app.use(signoutRouter);
 // app.use(signupRouter);
-app.use('/api/v1/auth',user)
+app.use('/api/v1/auth',auth)
+app.use('/api/v1/match',match)
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   next(new NotFoundError());
 })

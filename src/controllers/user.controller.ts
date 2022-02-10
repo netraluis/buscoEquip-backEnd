@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { User, UserDoc } from "../models/user.models";
+import { User } from "../models/user.models";
+import { UserCommon } from '../types/user.types';
 import { CallbackError, NativeError } from "mongoose";
 import { BadRequestError } from '../utils';
 import bcrypt from 'bcryptjs';
@@ -15,7 +16,7 @@ export const signup = (req: Request, res: Response, next: NextFunction) => {
     password: hashPass(req.body.password),
   });
 
-  User.findOne({ email: req.body.email }, (err: NativeError, existingUser: UserDoc) => {
+  User.findOne({ email: req.body.email }, (err: NativeError, existingUser: UserCommon) => {
     if (err) { return next(err); }
     if (existingUser) {
       return next(new BadRequestError("Email already exist"));
@@ -31,7 +32,7 @@ export const signup = (req: Request, res: Response, next: NextFunction) => {
 }
 
 export const login = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("local", (err: Error, theUser: UserDoc, failureDetails: IVerifyOptions) => {
+  passport.authenticate("local", (err: Error, theUser: UserCommon, failureDetails: IVerifyOptions) => {
 
     if (err) { return next(err); }
 
@@ -62,8 +63,8 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
 }
 
 export const updateProfile = (req: Request, res: Response, next: NextFunction) => {
-  const user = req.user as UserDoc;
-  User.findById(user.id, (err: NativeError, user: UserDoc) => {
+  const user = req.user as UserCommon;
+  User.findById(user.id, (err: NativeError, user: UserCommon) => {
     if (err) { return next(err); }
     // user.profile.name = req.body.username || "";
     // user.profile.gender = req.body.gender || "";
@@ -74,8 +75,8 @@ export const updateProfile = (req: Request, res: Response, next: NextFunction) =
 
 export const updatePassword = (req: Request, res: Response, next: NextFunction) => {
   const {oldPassword, newPassword } = req.body
-  const user = req.user as UserDoc;
-  User.findById(user.id, (err: NativeError, user: UserDoc) => {
+  const user = req.user as UserCommon;
+  User.findById(user.id, (err: NativeError, user: UserCommon) => {
     if (err) { return next(err); }
     if(!bcrypt.compareSync(oldPassword, user.password)){
       return next(new PassportAuthError('Insert your old password correctly'))
@@ -86,6 +87,6 @@ export const updatePassword = (req: Request, res: Response, next: NextFunction) 
         if (err) { return next(err); }
         return res.status(204).json({message: 'Password correctly updated'})
     }));
-});
+  });
 
 }

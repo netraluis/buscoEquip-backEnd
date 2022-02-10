@@ -1,45 +1,5 @@
 import mongoose from 'mongoose';
-
-// declare global {
-//   namespace Express {
-//       export interface Request {
-//           user?: UserDoc
-//       }
-
-//       interface User {
-//           [_: string]: any;
-//       }
-//   }
-// }
-
-// An interface that describes the properties
-// that are requried to create a new User
-export type UserDoc = mongoose.Document & userCommon & {
-  email: string;
-  password: string;
-  username: string;
-  city: string;
-  picture: string;
-}
-
-type userCommon = UserPlayer | UserClub | UserClubWorker
-
-interface UserPlayer {
-  type: 'player'
-}
-
-interface UserClubWorker {
-  type: 'clubWorker',
-  place?: string,
-  club?: string
-}
-
-interface UserClub {
-  type: 'club',
-  teamDimensions: 'nothing' | '-9000' | '10000-20000' | '20000-50000' | '50000-100000' | '100000-',
-  level: 'amateur' | 'semi-profesional' | 'profesional' | 'manager'
-}
-
+import { UserCommon } from '../types/user.types'
 
 const userSchemaFields = {
   email: {
@@ -60,34 +20,32 @@ const userSchemaFields = {
   },
   picture: {
     type: String,
-    default: ''
+    required: true,
+    default: null
   },
   type: {
     type: String,
     required: true
   },
-  dimensions: {
+  teamDimensions: {
     type: String,
     required: false
   },
   level: {
     type: String,
     required: false
+  },
+  club_worker_id: {
+    type: String,
+    required: false
+  },
+  club_id: {
+    type: String,
+    required: false
   }
 }
 
-// const UserSchema = new mongoose.Schema<UserAttrs,mongoose.Model<UserAttrs>, UserDoc>(userSchemaFields, {
-//   // toJSON: {
-//   //   transform(doc, ret){
-//   //     ret.id = ret._id;
-//   //     delete ret._id;
-//   //     delete ret.password;
-//   //   },
-//   //   versionKey: false
-//   // }
-// });
-
-const UserSchema = new mongoose.Schema<UserDoc>(userSchemaFields, {
+const UserSchema = new mongoose.Schema<UserCommon>(userSchemaFields, {
   timestamps: true,
     toJSON: {
     transform(doc, ret){
@@ -97,4 +55,4 @@ const UserSchema = new mongoose.Schema<UserDoc>(userSchemaFields, {
   }
 });
 
-export const User = mongoose.model<UserDoc>('User', UserSchema);
+export const User = mongoose.model<UserCommon>('User', UserSchema);

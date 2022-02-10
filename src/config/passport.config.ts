@@ -1,7 +1,8 @@
 import passport from 'passport';
 import local_strategy from 'passport-local';
 import bcrypt from 'bcryptjs';
-import { User, UserDoc } from '../models/user.models';
+import { UserCommon } from '../types/user.types';
+import { User } from '../models/user.models';
 import { NativeError } from "mongoose";
 import { PassportAuthError } from '../utils/errors/passport-auth-errors';
 
@@ -16,7 +17,7 @@ export default (app: any) => {
 
   // Identificará a qué usuario pertenece la sesión
   passport.deserializeUser((id, cb) => {
-    User.findById(id, (err: NativeError, user: UserDoc) => cb(err, user));
+    User.findById(id, (err: NativeError, user: UserCommon) => cb(err, user));
   });
 
   // Local Strategy
