@@ -20,7 +20,6 @@ const userSchemaFields = {
   },
   picture: {
     type: String,
-    required: true,
     default: null
   },
   type: {

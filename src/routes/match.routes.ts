@@ -1,10 +1,11 @@
 import { body } from "express-validator";
-import { createMatch, createATry, getAllMatches } from "../controllers/match.controller";
+import { createATry, createMatch, getAllMatches } from "../controllers/match.controller";
 import { currentUser } from '../utils/middlewares/current-user';
 import { validateRequest } from '../utils/middlewares/validate-request';
 import router from './auth.routes';
 
-router.post('/', currentUser, [
+router.post('/',
+  currentUser, [
   body("title")
     .trim()
     .notEmpty()
@@ -13,9 +14,10 @@ router.post('/', currentUser, [
     .trim()
     .optional()
 ],
-  validateRequest, createMatch);
+  validateRequest,
+  createMatch);
 
 router.get('/', currentUser, validateRequest, getAllMatches);
 
-router.post('/:match_id',currentUser, validateRequest, createATry )
+router.post('/:match_id', currentUser, validateRequest, createATry)
 export default router;

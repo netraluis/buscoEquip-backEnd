@@ -10,7 +10,7 @@ export class IncorrectType extends CustomError {
   }
 
 	serializeErrors(){
-		return [{message: 'Not Found'}];
+		return [{message: 'Incorrect type'}];
 	}
 
 }

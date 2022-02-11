@@ -10,6 +10,11 @@ import { TryDoc } from "../types/try.types";
 import { IncorrectType } from "../utils/errors/incorrect-type";
 
 export const createMatch = (req: Request, res: Response, next: NextFunction) => {
+  const user = req.user as UserCommon
+
+  if(user.type !== 'club'){
+    return next(new IncorrectType())
+  }
 
   const match = new Match({
     joinUser: null,
